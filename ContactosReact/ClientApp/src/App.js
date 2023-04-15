@@ -59,7 +59,7 @@ const App = () => {
              </Row>
             
             {/*Llama al componente modal*/}        
-             <ModalContacto mostrarModal={mostrarModal} setMostrarModal={setMostrarModal}guardarContacto={guardarContacto }
+             <ModalContacto mostrarModal={mostrarModal} setMostrarModal={setMostrarModal} guardarContacto={guardarContacto }
              />
          </Container>
          )
