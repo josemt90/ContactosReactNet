@@ -48,7 +48,8 @@ const App = () => {
             },
             body: JSON.stringify(contacto)
         })
-
+           
+        //si es correcto la ventana se cerrara
         if (response.ok) {
             setMostrarModal(!mostrarModal);
             mostrarContactos();
@@ -56,7 +57,8 @@ const App = () => {
     }
 
     const eliminarContacto = async (id) => {
-
+        
+        //se crea una ventana para confirmar
         var respuesta = window.confirm("Desea elimina el contacto?")
 
         if (!respuesta) {
