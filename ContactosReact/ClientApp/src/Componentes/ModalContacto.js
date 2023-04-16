@@ -1,6 +1,7 @@
 ﻿import {useEffect, useState } from "react"
 import { Modal,ModalBody,ModalHeader,Form,FormGroup,Input,Label, ModalFooter, Button,} from "reactstrap"
 
+//creamos el objeto modelo contacto
 const modeloContacto = {
     idContacto: 0,
     nombre: "",
