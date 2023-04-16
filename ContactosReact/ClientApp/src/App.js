@@ -66,7 +66,7 @@ const App = () => {
         const response = await fetch("api/contacto/Eliminar/" + id, {
             method: 'DELETE',
             })
-¡
+
         if (response.ok) {
             mostrarContactos();
         }
