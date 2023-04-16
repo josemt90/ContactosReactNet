@@ -8,6 +8,7 @@ const App = () => {
 
     const [contactos, setContactos] = useState([])
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [editar, setEditar] = useState(null);
 
     const mostrarContactos = async () => {
 
@@ -38,6 +39,38 @@ const App = () => {
             mostrarContactos();
         }
     }
+
+    const editarContacto = async (contacto) => {
+        const response = await fetch("api/contacto/Editar", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(contacto)
+        })
+
+        if (response.ok) {
+            setMostrarModal(!mostrarModal);
+            mostrarContactos();
+        }
+    }
+
+    const eliminarContacto = async (id) => {
+
+        var respuesta = window.confirm("Desea elimina el contacto?")
+
+        if (!respuesta) {
+            return;
+        }
+
+        const response = await fetch("api/contacto/Eliminar/" + id, {
+            method: 'DELETE',
+            })
+¡
+        if (response.ok) {
+            mostrarContactos();
+        }
+    }
    
 
      return (
@@ -52,14 +85,22 @@ const App = () => {
                          
                              <Button size="sm" color="success" onClick={()=> setMostrarModal(!mostrarModal)} >Nuevo Contacto</Button>
                          <hr></hr>
-                             <TablaContacto data={contactos} />
+                             <TablaContacto data={contactos}
+                                 setEditar={setEditar}
+                                 mostrarModal={mostrarModal}
+                                 setMostrarModal={setMostrarModal}
+
+                                 eliminarContacto={eliminarContacto }
+                             />
                          </CardBody>
                      </Card>
                  </Col>
              </Row>
             
             {/*Llama al componente modal*/}        
-             <ModalContacto mostrarModal={mostrarModal} setMostrarModal={setMostrarModal} guardarContacto={guardarContacto }
+             <ModalContacto mostrarModal={mostrarModal} setMostrarModal={setMostrarModal} guardarContacto={guardarContacto}
+
+                 editar={editar} setEditar={setEditar} editarContacto={editarContacto}
              />
          </Container>
          )

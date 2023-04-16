@@ -1,4 +1,4 @@
-﻿import {useState } from "react"
+﻿import {useEffect, useState } from "react"
 import { Modal,ModalBody,ModalHeader,Form,FormGroup,Input,Label, ModalFooter, Button,} from "reactstrap"
 
 const modeloContacto = {
@@ -8,9 +8,10 @@ const modeloContacto = {
     telefono: ""
     }
 
-const ModalContacto = ({ mostrarModal, setMostrarModal, guardarContacto }) => {
+const ModalContacto = ({ mostrarModal, setMostrarModal, guardarContacto,editar,setEditar,editarContacto }) => {
 
     const [contacto, setContacto] = useState(modeloContacto);
+   
 
     const actualizarDato = (e) => {
         console.log(e.target.name + " : " + e.target.value)
@@ -25,13 +26,32 @@ const ModalContacto = ({ mostrarModal, setMostrarModal, guardarContacto }) => {
     const enviarDatos = () => {
         if (contacto.idContacto == 0) {
             guardarContacto(contacto)
+        } else {
+            editarContacto(contacto)
         }
+
+        setContacto(modeloContacto)
+    }
+
+    useEffect(() => {
+        if (editar != null) {
+            setContacto(editar)
+        } else {
+            setContacto(modeloContacto)
+        }
+    }, [editar])
+
+    const cerrarModal = () => {
+        setMostrarModal(!mostrarModal)
+        setEditar(null)
     }
 
     return (
         <Modal isOpen={mostrarModal}>
             <ModalHeader>
-            Nuevo Contacto
+
+                {contacto.idContacto == 0 ? "Nuevo Contacto" : "Editar Contacto" }
+            
             </ModalHeader>
             <ModalBody>
                 <Form>
@@ -47,12 +67,13 @@ const ModalContacto = ({ mostrarModal, setMostrarModal, guardarContacto }) => {
                         <Label>Telefono</Label>
                         <Input name="telefono" onChange={(e) => actualizarDato(e)} value={contacto.telefono} />
                     </FormGroup>
+                    
                 </Form>
             </ModalBody>
 
             <ModalFooter>
                 <Button color="primary" size="sm" onClick={enviarDatos }>Guardar</Button>
-                <Button color="danger" size="sm" onClick={()=>  setMostrarModal(!mostrarModal) }>Cerrar</Button>
+                <Button color="danger" size="sm" onClick={cerrarModal }>Cerrar</Button>
             </ModalFooter>
         </Modal>
         )
